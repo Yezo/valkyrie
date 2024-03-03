@@ -6,10 +6,10 @@ import {
   integer,
   serial,
   varchar,
-} from "drizzle-orm/pg-core";
-import type { AdapterAccount } from "@auth/core/adapters";
-import { relations } from "drizzle-orm";
-import { userRoleEnum, userPronounsEnum } from "@/db/schema/enum";
+} from "drizzle-orm/pg-core"
+import type { AdapterAccount } from "@auth/core/adapters"
+import { relations } from "drizzle-orm"
+import { userRoleEnum, userPronounsEnum } from "@/db/schema/enum"
 
 export const users = pgTable("user", {
   id: text("id").notNull().primaryKey(),
@@ -21,7 +21,7 @@ export const users = pgTable("user", {
   image: text("image"),
   role: userRoleEnum("user").default("user"),
   createdAt: timestamp("createdAt", { mode: "date" }).defaultNow().notNull(),
-});
+})
 
 export const userRelations = relations(users, ({ one, many }) => ({
   userProfile: one(userProfile, {
@@ -32,7 +32,7 @@ export const userRelations = relations(users, ({ one, many }) => ({
     fields: [users.id],
     references: [userSocialMedia.userId],
   }),
-}));
+}))
 
 export const userProfile = pgTable("userProfile", {
   id: serial("id").primaryKey(),
@@ -42,7 +42,7 @@ export const userProfile = pgTable("userProfile", {
   bio: varchar("bio", { length: 256 }),
   pronouns: userPronounsEnum("pronouns").default("Do not specify"),
   website: varchar("website", { length: 50 }),
-});
+})
 
 export const userSocialMedia = pgTable("userSocialMedia", {
   userId: text("userId")
@@ -57,7 +57,7 @@ export const userSocialMedia = pgTable("userSocialMedia", {
   tiktok: varchar("tiktok", { length: 30 }),
   patreon: varchar("patreon", { length: 30 }),
   behance: varchar("behance", { length: 30 }),
-});
+})
 
 export const accounts = pgTable(
   "account",
@@ -79,7 +79,7 @@ export const accounts = pgTable(
   (account) => ({
     compoundKey: primaryKey(account.provider, account.providerAccountId),
   }),
-);
+)
 
 export const sessions = pgTable("session", {
   sessionToken: text("sessionToken").notNull().primaryKey(),
@@ -87,7 +87,7 @@ export const sessions = pgTable("session", {
     .notNull()
     .references(() => users.id, { onDelete: "cascade" }),
   expires: timestamp("expires", { mode: "date" }).notNull(),
-});
+})
 
 export const verificationTokens = pgTable(
   "verificationToken",
@@ -99,7 +99,7 @@ export const verificationTokens = pgTable(
   (vt) => ({
     compoundKey: primaryKey(vt.identifier, vt.token),
   }),
-);
+)
 
-export type User = typeof users.$inferSelect;
-export type UserProfileType = typeof userProfile.$inferSelect;
+export type User = typeof users.$inferSelect
+export type UserProfileType = typeof userProfile.$inferSelect

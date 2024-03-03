@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from "zod"
 
 export const emailSchema = z
   .string({
@@ -13,7 +13,7 @@ export const emailSchema = z
   })
   .email({
     message: "Please enter a valid email address",
-  });
+  })
 
 export const signInWithPasswordSchema = z.object({
   email: emailSchema,
@@ -21,7 +21,7 @@ export const signInWithPasswordSchema = z.object({
     required_error: "Password is required",
     invalid_type_error: "Password must be a string",
   }),
-});
+})
 
 const passwordSchema = z
   .string({
@@ -33,7 +33,7 @@ const passwordSchema = z
   })
   .max(256, {
     message: "Password must be made of at most 256 characters",
-  });
+  })
 
 export const signUpWithPasswordSchema = z.object({
   username: z.string().min(3, {
@@ -47,7 +47,7 @@ export const signUpWithPasswordSchema = z.object({
         "Password must contain at least 8 characters, including one uppercase, one lowercase, one number and one special character",
     },
   ),
-});
+})
 
 export const deleteBioSchema = z.object({
   id: z.number().int({
@@ -56,19 +56,19 @@ export const deleteBioSchema = z.object({
   userId: z.string().min(2, {
     message: "userId must be at least 2 characters.",
   }),
-});
+})
 
 export const bioSchema = z.object({
   bio: z.string().min(2, {
     message: "Bio must be at least 2 characters.",
   }),
-});
+})
 
 export const updateUsernameSchema = z.object({
   username: z.string().min(3, {
     message: "Username must be at least 3 characters.",
   }),
-});
+})
 
 export const deleteSongSchema = z.object({
   id: z.number().int({
@@ -77,7 +77,7 @@ export const deleteSongSchema = z.object({
   userId: z.string().min(2, {
     message: "userId must be at least 2 characters.",
   }),
-});
+})
 
 export const songSchema = z.object({
   title: z.string().min(2, {
@@ -92,23 +92,23 @@ export const songSchema = z.object({
   duration: z.string().min(2, {
     message: "duration must be at least 2 characters.",
   }),
-});
+})
 
 export const heroInputSchema = z.object({
   username: z.string().max(25, {
     message: "Username cannot have more than 25 characters.",
   }),
-});
+})
 
-export type heroInputSchemaInput = z.infer<typeof heroInputSchema>;
+export type heroInputSchemaInput = z.infer<typeof heroInputSchema>
 
 export type SignUpWithPasswordFormInput = z.infer<
   typeof signUpWithPasswordSchema
->;
+>
 
 export type SignInWithPasswordFormInput = z.infer<
   typeof signInWithPasswordSchema
->;
+>
 
 export const settingsSchema = z.object({
   username: z.optional(
@@ -134,9 +134,9 @@ export const settingsSchema = z.object({
       },
     ),
   ),
-});
+})
 
-export type settingsSchemaType = z.infer<typeof settingsSchema>;
+export type settingsSchemaType = z.infer<typeof settingsSchema>
 
 export const settingsProfileSchema = z.object({
   username: z.union([
@@ -181,9 +181,9 @@ export const settingsProfileSchema = z.object({
       .url(),
     z.literal(""),
   ]),
-});
+})
 
-export type settingsProfileSchemaType = z.infer<typeof settingsProfileSchema>;
+export type settingsProfileSchemaType = z.infer<typeof settingsProfileSchema>
 
 export const socialMediaSchema = z.union([
   z
@@ -195,7 +195,7 @@ export const socialMediaSchema = z.union([
       message: "Username cannot have more than 30 characters.",
     }),
   z.literal(""),
-]);
+])
 
 export const editProfileSocialMediaSchema = z.object({
   twitter: socialMediaSchema,
@@ -207,8 +207,8 @@ export const editProfileSocialMediaSchema = z.object({
   tiktok: socialMediaSchema,
   patreon: socialMediaSchema,
   behance: socialMediaSchema,
-});
+})
 
 export type editProfileSocialMediaSchemaType = z.infer<
   typeof editProfileSocialMediaSchema
->;
+>
