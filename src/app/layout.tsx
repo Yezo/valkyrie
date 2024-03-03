@@ -1,12 +1,12 @@
-import type { Metadata } from "next";
-import { inter, bricolage } from "@/config/font";
-import { SITE_CONFIG } from "@/config/site";
-import { Toaster } from "@/components/shadcn/sonner";
-import "../styles/globals.css";
+import type { Metadata } from "next"
+import { inter, bricolage } from "@/config/font"
+import { SITE_CONFIG } from "@/config/site"
+import { Toaster } from "@/components/shadcn/sonner"
+import "../styles/globals.css"
 
 type RootLayoutProps = {
-  children: React.ReactNode;
-};
+  children: React.ReactNode
+}
 
 export const metadata: Metadata = {
   title: {
@@ -46,7 +46,7 @@ export const metadata: Metadata = {
     images: [SITE_CONFIG.ogImage],
     creator: "@kevodotdev",
   },
-};
+}
 
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
@@ -56,5 +56,5 @@ export default function RootLayout({ children }: RootLayoutProps) {
         {children}
       </body>
     </html>
-  );
+  )
 }

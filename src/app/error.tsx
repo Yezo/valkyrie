@@ -1,18 +1,18 @@
-"use client";
+"use client"
 
-import { useRouter } from "next/navigation";
-import { PersonIcon, ReloadIcon, ResetIcon } from "@radix-ui/react-icons";
-import { Button } from "@/components/shadcn/button";
+import { useRouter } from "next/navigation"
+import { PersonIcon, ReloadIcon, ResetIcon } from "@radix-ui/react-icons"
+import { Button } from "@/components/shadcn/button"
 
 export default function Error({
   error,
   reset,
 }: {
-  error: Error;
-  reset: () => void;
+  error: Error
+  reset: () => void
 }) {
-  const router = useRouter();
-  const handleGoBackOnePage = () => router.back();
+  const router = useRouter()
+  const handleGoBackOnePage = () => router.back()
 
   return (
     <main className="grid min-h-screen place-items-center">
@@ -32,5 +32,5 @@ export default function Error({
         </div>
       </div>
     </main>
-  );
+  )
 }
