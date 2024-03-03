@@ -6,6 +6,17 @@ import { users } from "@/db/schema"
 import { eq } from "drizzle-orm"
 import { User } from "next-auth"
 
+export async function getDummyData(id: string) {
+  noStore()
+  try {
+    const user = ["hi"]
+    return "success"
+  } catch (error) {
+    console.error(error)
+    throw new Error("Error getting user by id")
+  }
+}
+
 export async function getUserById(id: string): Promise<User | null> {
   noStore()
   try {
