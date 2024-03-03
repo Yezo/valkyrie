@@ -3,6 +3,7 @@ import { inter, bricolage } from "@/config/font"
 import { SITE_CONFIG } from "@/config/site"
 import { Toaster } from "@/components/shadcn/sonner"
 import "../styles/globals.css"
+import { ThemeProvider } from "@/styles/themes"
 
 type RootLayoutProps = {
   children: React.ReactNode
@@ -51,9 +52,16 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en" className={`${inter.variable} ${bricolage.variable}`}>
-      <body className="bg-black text-white">
-        <Toaster />
-        {children}
+      <body className="bg-background text-foreground">
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <Toaster />
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   )
