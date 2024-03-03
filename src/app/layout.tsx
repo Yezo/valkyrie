@@ -51,7 +51,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en" className={`${inter.variable} ${bricolage.variable}`}>
-      <body className="bg-black">
+      <body className="bg-black text-white">
         <Toaster />
         {children}
       </body>
