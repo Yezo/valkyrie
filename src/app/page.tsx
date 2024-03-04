@@ -2,11 +2,12 @@ import { BasicForm } from "@/components/forms/BasicForm"
 import { Button } from "@/components/shadcn/button"
 import { Badge } from "@/components/ui/Badge"
 import { ThemeToggleButton } from "@/components/ui/ThemeToggleButton"
-import { getAllUsers } from "@/db/actions/user"
+import { getAllUsers, getUserByUsername } from "@/db/actions/user"
+
 import { CodeIcon } from "@radix-ui/react-icons"
 
 export default async function Home() {
-  // const s = await getAllUsers()
+  // const s = await getUserByUsername({ username: "karina" })
   // console.log(s)
   return (
     <main className="grid min-h-screen place-items-center">

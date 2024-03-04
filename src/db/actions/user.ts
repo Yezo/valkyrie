@@ -6,11 +6,6 @@ import { users } from "@/db/schema"
 import { eq, ilike } from "drizzle-orm"
 import { User } from "next-auth"
 import {
-  GetUserByEmailInput,
-  GetUserByIdInput,
-  GetUserByUsernameInput,
-  GetUserProfileByIdInput,
-  GetUserSocialMediaInput,
   getUserByEmailSchema,
   getUserByIdSchema,
   getUserByUsernameSchema,
@@ -25,9 +20,10 @@ import {
   psGetUserProfileById,
   psGetUserSocialMedia,
 } from "@/db/prepared/statements"
+import { z } from "zod"
 
 export async function getUserById(
-  rawData: GetUserByIdInput,
+  rawData: z.infer<typeof getUserByIdSchema>,
 ): Promise<User | null> {
   try {
     const validatedData = getUserByIdSchema.safeParse(rawData)
@@ -54,7 +50,7 @@ export async function getAllUsers(): Promise<User[] | null> {
 }
 
 export async function getUserByEmail(
-  rawData: GetUserByEmailInput,
+  rawData: z.infer<typeof getUserByEmailSchema>,
 ): Promise<User | null> {
   try {
     const validatedData = getUserByEmailSchema.safeParse(rawData)
@@ -72,7 +68,7 @@ export async function getUserByEmail(
 }
 
 export async function getUserByUsername(
-  rawData: GetUserByUsernameInput,
+  rawData: z.infer<typeof getUserByUsernameSchema>,
 ): Promise<User | null> {
   try {
     const validatedData = getUserByUsernameSchema.safeParse(rawData)
@@ -89,7 +85,9 @@ export async function getUserByUsername(
   }
 }
 
-export async function getUserSocialMedia(rawData: GetUserSocialMediaInput) {
+export async function getUserSocialMedia(
+  rawData: z.infer<typeof getUserSocialMediaSchema>,
+) {
   try {
     const validatedData = getUserSocialMediaSchema.safeParse(rawData)
     if (!validatedData.success) return null
@@ -106,7 +104,9 @@ export async function getUserSocialMedia(rawData: GetUserSocialMediaInput) {
   }
 }
 
-export async function getUserProfileById(rawData: GetUserProfileByIdInput) {
+export async function getUserProfileById(
+  rawData: z.infer<typeof getUserProfileByIdSchema>,
+) {
   try {
     const validatedData = getUserProfileByIdSchema.safeParse(rawData)
     if (!validatedData.success) return null

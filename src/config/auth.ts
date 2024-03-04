@@ -1,15 +1,13 @@
 import { DrizzleAdapter } from "@auth/drizzle-adapter"
-
 import { getUserByEmail, getUserById } from "@/db/actions/user"
-
 import { UserRole } from "@/types/next-auth"
+import { db } from "@/db/db"
+import { signInWithPasswordSchema } from "@/validations/auth"
 import NextAuth, { NextAuthConfig } from "next-auth"
 import GitHubProvider from "next-auth/providers/github"
 import GoogleProvider from "next-auth/providers/google"
 import CredentialsProvider from "next-auth/providers/credentials"
 import bcryptjs from "bcryptjs"
-import { signInWithPasswordSchema } from "@/validations/user"
-import { db } from "@/db/db"
 
 export const authConfig = {
   session: {
