@@ -52,14 +52,14 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en" className={`${inter.variable} ${bricolage.variable}`}>
-      <body className="bg-background text-foreground">
+      <body className="container bg-background text-foreground font-inter antialiased">
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange
         >
-          <Toaster />
+          <Toaster richColors />
           {children}
         </ThemeProvider>
       </body>
