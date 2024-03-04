@@ -10,7 +10,7 @@ import {
   FormLabel,
 } from "@/components/shadcn/form"
 
-type FormInputProps = {
+type FormTextInputProps = {
   value: string
   placeholder: string
   className?: string
@@ -18,13 +18,13 @@ type FormInputProps = {
   label?: string
 }
 
-export const FormInput = ({
+export const FormTextInput = ({
   value,
   placeholder,
   className,
   description,
   label,
-}: FormInputProps) => {
+}: FormTextInputProps) => {
   const { control } = useFormContext()
 
   return (

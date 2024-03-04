@@ -2,7 +2,7 @@
 
 import { Form } from "@/components/shadcn/form"
 import { FormSubmitButton } from "@/components/ui/FormSubmitButton"
-import { FormInput } from "@/components/ui/FormInput"
+import { FormTextInput } from "@/components/ui/FormTextInput"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
@@ -52,7 +52,7 @@ export function BasicForm({ className }: BasicFormProps) {
         onSubmit={form.handleSubmit(onSubmit)}
         className={cn("flex flex-col max-w-[400px] gap-4", className)}
       >
-        <FormInput
+        <FormTextInput
           value="username"
           placeholder="Enter username"
           label="Username"

@@ -9,14 +9,14 @@ import { generateToast } from "@/lib/utils"
 import { Form } from "@/components/shadcn/form"
 import { signUpWithPasswordSchema } from "@/validations/auth"
 import { signUpWithPassword } from "@/db/actions/user"
-import { FormInput } from "@/components/ui/FormInput"
+import { FormTextInput } from "@/components/ui/FormTextInput"
 import { FormSubmitButton } from "@/components/ui/FormSubmitButton"
+import { FormPasswordInput } from "@/components/ui/FormPasswordInput"
 
 type SignUpWithPasswordFormProps = {}
 
 export function SignUpWithPasswordForm({}: SignUpWithPasswordFormProps) {
   const router = useRouter()
-  const [passwordVisiblity, setPasswordVisiblity] = useState(false)
   const [pending, setPending] = useState(false)
 
   const form = useForm<z.infer<typeof signUpWithPasswordSchema>>({
@@ -98,19 +98,15 @@ export function SignUpWithPasswordForm({}: SignUpWithPasswordFormProps) {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-        <FormInput
+        <FormTextInput
           value="username"
           placeholder="Enter username"
           label="Username"
         />
 
-        <FormInput value="email" placeholder="Enter email" label="Email" />
+        <FormTextInput value="email" placeholder="Enter email" label="Email" />
 
-        <FormInput
-          value="password"
-          placeholder="Enter password"
-          label="Password"
-        />
+        <FormPasswordInput value="password" label="Password" />
 
         <FormSubmitButton pending={pending} className="max-w-fit self-end">
           Create account

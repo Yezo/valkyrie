@@ -25,109 +25,125 @@ import {
 } from "@/db/prepared/statements"
 import { z } from "zod"
 import { signUpWithPasswordSchema } from "@/validations/auth"
-import { DatabaseError } from "pg"
 import { DatabasePromise } from "@/types"
 
 export async function getUserById(
   rawData: z.infer<typeof getUserByIdSchema>,
 ): Promise<User | null> {
+  noStore()
+
   try {
+    //Validate raw data with Zod
     const validatedData = getUserByIdSchema.safeParse(rawData)
     if (!validatedData.success) return null
+    const { id } = validatedData.data
 
-    noStore()
-    const [user] = await psGetUserById.execute({ id: validatedData.data.id })
+    //Get the user
+    const [user] = await psGetUserById.execute({ id: id })
+
     return user || null
   } catch (error) {
-    console.error(error)
-    throw new Error("Error getting user by id")
+    throw new Error("There was an error getting the user by id.")
   }
 }
 
 export async function getAllUsers(): Promise<User[] | null> {
+  noStore()
   try {
-    noStore()
+    //Get all users
     const [user] = await psGetAllUsers.execute()
+
     return [user] || null
   } catch (error) {
-    console.error(error)
-    throw new Error("Error getting user by id")
+    throw new Error("There was an error getting user by id.")
   }
 }
 
 export async function getUserByEmail(
   rawData: z.infer<typeof getUserByEmailSchema>,
 ): Promise<User | null> {
+  noStore()
+
   try {
+    //Validate raw data with Zod
     const validatedData = getUserByEmailSchema.safeParse(rawData)
     if (!validatedData.success) return null
+    const { email } = validatedData.data
 
-    noStore()
+    //Get user by email
     const [user] = await psGetUserByEmail.execute({
-      email: validatedData.data.email,
+      email: email,
     })
+
     return user || null
   } catch (error) {
-    console.error(error)
-    throw new Error("Error getting user by email")
+    throw new Error("There was an error getting user by email.")
   }
 }
 
 export async function getUserByUsername(
   rawData: z.infer<typeof getUserByUsernameSchema>,
 ): Promise<User | null> {
+  noStore()
+
   try {
+    //Validate raw data with Zod
     const validatedData = getUserByUsernameSchema.safeParse(rawData)
     if (!validatedData.success) return null
+    const { username } = validatedData.data
 
-    noStore()
+    //Get user by username
     const [user] = await psGetUserByUsername.execute({
-      username: validatedData.data.username,
+      username: username,
     })
+
     return user || null
   } catch (error) {
-    console.error(error)
-    throw new Error("Error getting user by username")
+    throw new Error("There was an error getting user by username.")
   }
 }
 
 export async function getUserSocialMedia(
   rawData: z.infer<typeof getUserSocialMediaSchema>,
 ) {
+  noStore()
+
   try {
+    //Validate raw data with Zod
     const validatedData = getUserSocialMediaSchema.safeParse(rawData)
     if (!validatedData.success) return null
+    const { id } = validatedData.data
 
-    noStore()
+    //Get user social media
     const [user] = await psGetUserSocialMedia.execute({
-      id: validatedData.data.id,
+      id: id,
     })
 
     return user || null
   } catch (error) {
-    console.error(error)
-    throw new Error("Error getting user social media links")
+    throw new Error("There was an error getting user social media links.")
   }
 }
 
 export async function getUserProfileById(
   rawData: z.infer<typeof getUserProfileByIdSchema>,
 ) {
+  noStore()
+
   try {
+    //Validate raw data with Zod
     const validatedData = getUserProfileByIdSchema.safeParse(rawData)
     if (!validatedData.success) return null
+    const { id } = validatedData.data
 
-    noStore()
-
+    //Get user profile by id
     const [user] = await psGetUserProfileById.execute({
-      id: validatedData.data.id,
+      id: id,
     })
 
     revalidatePath("/settings/profile")
-
     return user || null
   } catch (error) {
-    console.error(error)
     throw new Error("Error getting user's profile by id")
   }
 }
@@ -138,6 +154,7 @@ export async function updateUserUsername(
   noStore()
 
   try {
+    //Validate raw data with Zod
     const validatedData = updateUserUsernameSchema.safeParse(rawData)
     if (!validatedData.success) return null
 
@@ -172,6 +189,7 @@ export async function updateUserFullName(
   noStore()
 
   try {
+    //Validate raw data with Zod
     const validatedData = updateUserFullNameSchema.safeParse(rawData)
     if (!validatedData.success) return null
     const { id, newFullName } = validatedData.data
