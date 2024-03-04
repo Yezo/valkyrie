@@ -42,7 +42,10 @@ export const FormPasswordInput = ({
               <Input
                 placeholder="**********"
                 type={passwordVisiblity ? "text" : "password"}
-                className=" flex h-11 items-center justify-center border p-4 font-bricolage text-sm transition-colors duration-300"
+                className={cn(
+                  "flex h-11 items-center justify-center border p-4 font-bricolage text-sm transition-colors duration-300",
+                  className,
+                )}
                 {...field}
               />
               {passwordVisiblity ? (

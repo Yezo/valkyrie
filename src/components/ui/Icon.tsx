@@ -1,10 +1,36 @@
 import { cn } from "@/lib/utils"
+import { cva, type VariantProps } from "class-variance-authority"
 
 type IconProps = {
   className?: string
   children: React.ReactNode
 }
 
-export const Icon = ({ className, children }: IconProps) => {
-  return <div className={cn("", className)}>{children}</div>
+const iconVariants = cva("p-2 rounded shadow select-none", {
+  variants: {
+    variant: {
+      default: "bg-primary text-primary-foreground",
+      transparent: "bg-transparent text-white",
+    },
+    size: {
+      default: "p-2",
+      small: "p-1",
+      large: "p-4",
+    },
+  },
+  defaultVariants: {
+    variant: "default",
+    size: "default",
+  },
+})
+
+interface IconCVAProps extends VariantProps<typeof iconVariants>, IconProps {
+  className?: string
+  children: React.ReactNode
+}
+
+export const Icon = ({ className, children, variant }: IconCVAProps) => {
+  return (
+    <div className={cn(iconVariants({ variant, className }))}>{children}</div>
+  )
 }
