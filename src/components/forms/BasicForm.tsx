@@ -11,17 +11,13 @@ import { z } from "zod"
 import { FormTextArea } from "@/components/ui/FormTextArea"
 import { FormSelect } from "@/components/ui/FormSelect"
 import { FormSwitch } from "@/components/ui/FormSwitch"
-import { FormCombobox } from "@/components/ui/FormCombobox"
 
 const BasicFormSchema = z.object({
   username: z.string().min(2, {
     message: "Username must be at least 2 characters.",
   }),
-  //   text: z.string().min(2, {
-  //     message: "Text must be at least 2 characters.",
-  //   }),
   text: z.string().min(2, {
-    message: "Username must be at least 2 characters.",
+    message: "Text must be at least 2 characters.",
   }),
 })
 
@@ -30,18 +26,6 @@ type BasicFormSchemaType = z.infer<typeof BasicFormSchema>
 type BasicFormProps = {
   className?: string
 }
-
-const languages = [
-  { label: "English", value: "en" },
-  { label: "French", value: "fr" },
-  { label: "German", value: "de" },
-  { label: "Spanish", value: "es" },
-  { label: "Portuguese", value: "pt" },
-  { label: "Russian", value: "ru" },
-  { label: "Japanese", value: "ja" },
-  { label: "Korean", value: "ko" },
-  { label: "Chinese", value: "zh" },
-]
 
 export function BasicForm({ className }: BasicFormProps) {
   const [pending, isPending] = useState(false)
@@ -71,8 +55,7 @@ export function BasicForm({ className }: BasicFormProps) {
         <FormInput
           value="username"
           placeholder="Enter username"
-          label="Hi"
-          description="ye"
+          label="Username"
         />
         {/* 
         <FormSwitch
@@ -95,8 +78,6 @@ export function BasicForm({ className }: BasicFormProps) {
         <FormSubmitButton pending={pending} className="max-w-fit self-end">
           Create account
         </FormSubmitButton>
-
-        <FormCombobox value={"text"} languages={languages} placeholder="hi" />
       </form>
     </Form>
   )

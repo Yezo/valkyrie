@@ -1,5 +1,6 @@
 "use server"
 
+import bcryptjs from "bcryptjs"
 import { unstable_noStore as noStore, revalidatePath } from "next/cache"
 import { db } from "@/db/db"
 import { users } from "@/db/schema"
@@ -11,6 +12,8 @@ import {
   getUserByUsernameSchema,
   getUserProfileByIdSchema,
   getUserSocialMediaSchema,
+  updateUserFullNameSchema,
+  updateUserUsernameSchema,
 } from "@/validations/user"
 import {
   psGetAllUsers,
@@ -21,6 +24,9 @@ import {
   psGetUserSocialMedia,
 } from "@/db/prepared/statements"
 import { z } from "zod"
+import { signUpWithPasswordSchema } from "@/validations/auth"
+import { DatabaseError } from "pg"
+import { DatabasePromise } from "@/types"
 
 export async function getUserById(
   rawData: z.infer<typeof getUserByIdSchema>,
@@ -127,29 +133,32 @@ export async function getUserProfileById(
 }
 
 export async function updateUserUsername(
-  id: string,
-  newUsername: string,
-): Promise<"not-found" | "success" | "duplicate" | null> {
+  rawData: z.infer<typeof updateUserUsernameSchema>,
+): Promise<DatabasePromise> {
   noStore()
+
   try {
+    const validatedData = updateUserUsernameSchema.safeParse(rawData)
+    if (!validatedData.success) return null
+
     //Check and find a user that matches id
-    const [user] = await db.select().from(users).where(eq(users.id, id))
+    const user = await getUserById({ id: validatedData.data.id })
     if (!user) return "not-found"
 
     //Check if the new username is already in use
     const [dupeUsername] = await db
       .select()
       .from(users)
-      .where(ilike(users.username, newUsername))
-    if (dupeUsername) return "duplicate"
+      .where(ilike(users.username, validatedData.data.newUsername))
+    if (dupeUsername) return "user-duplicate"
 
     //Update the current user with their new username
     const updatedUser = await db
       .update(users)
-      .set({ username: newUsername })
-      .where(eq(users.id, id))
+      .set({ username: validatedData.data.newUsername })
+      .where(eq(users.id, validatedData.data.id))
 
-    revalidatePath("/username")
+    revalidatePath(`/${validatedData.data.newUsername}`)
     return updatedUser ? "success" : null
   } catch (error) {
     console.error(error)
@@ -158,13 +167,17 @@ export async function updateUserUsername(
 }
 
 export async function updateUserFullName(
-  id: string,
-  newFullName: string,
-): Promise<"not-found" | "success" | null> {
+  rawData: z.infer<typeof updateUserFullNameSchema>,
+): Promise<DatabasePromise> {
   noStore()
+
   try {
+    const validatedData = updateUserFullNameSchema.safeParse(rawData)
+    if (!validatedData.success) return null
+    const { id, newFullName } = validatedData.data
+
     //Check and find a user that matches id
-    const [user] = await db.select().from(users).where(eq(users.id, id))
+    const user = await getUserById({ id: validatedData.data.id })
     if (!user) return "not-found"
 
     //Update the current user with their new full name
@@ -173,10 +186,50 @@ export async function updateUserFullName(
       .set({ name: newFullName })
       .where(eq(users.id, id))
 
-    revalidatePath("/username")
     return updatedUser ? "success" : null
   } catch (error) {
     console.error(error)
     throw new Error("Error updating name")
+  }
+}
+
+export async function signUpWithPassword(
+  rawData: z.infer<typeof signUpWithPasswordSchema>,
+): Promise<DatabasePromise> {
+  //Validate the user's input
+  const validatedData = signUpWithPasswordSchema.safeParse(rawData)
+
+  //If invalidated, return an error on the client side
+  if (!validatedData.success) return "invalid-input"
+
+  try {
+    //Check if the input's user exists in the database
+    const username = await getUserByUsername({
+      username: validatedData.data.username,
+    })
+    if (username) return "user-duplicate"
+
+    //Check if the input's email exists in the database
+    const user = await getUserByEmail({ email: validatedData.data.email })
+    if (user) return "email-duplicate"
+
+    //Encrypt the password
+    const password = await bcryptjs.hash(validatedData.data.password, 10)
+
+    //Insert a new user into the database
+    const newUserResponse: any = await db.insert(users).values({
+      id: crypto.randomUUID(),
+      email: validatedData.data.email,
+      username: validatedData.data.username,
+      password,
+    })
+
+    //If inserting a user failed, return an error
+    if (!newUserResponse) return "error"
+    revalidatePath("/")
+    return newUserResponse ? "success" : "error"
+  } catch (error) {
+    console.error(error)
+    throw new Error("Error signing up with password")
   }
 }

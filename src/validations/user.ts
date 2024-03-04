@@ -123,3 +123,13 @@ export const getUserSocialMediaSchema = z.object({
 export const getUserProfileByIdSchema = z.object({
   id: z.string(),
 })
+
+export const updateUserUsernameSchema = z.object({
+  id: z.string(),
+  newUsername: z.string(),
+})
+
+export const updateUserFullNameSchema = z.object({
+  id: z.string(),
+  newFullName: z.string(),
+})
