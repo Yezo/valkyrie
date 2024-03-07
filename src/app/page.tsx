@@ -1,28 +1,25 @@
-import { BasicForm } from "@/components/forms/BasicForm"
-import { SignUpWithPasswordForm } from "@/components/forms/SignUpForm"
-import { Button } from "@/components/shadcn/button"
-import { Badge } from "@/components/ui/Badge"
+import { LoadingIcon } from "@/components/ui/LoadingIcon"
+import { Mintlify } from "@/components/ui/Mintlify"
 import { ThemeToggleButton } from "@/components/ui/ThemeToggleButton"
-import { auth } from "@/config/auth"
-import { getAllUsers, getUserByUsername } from "@/db/actions/user"
+import { UserSelect } from "@/components/ui/UserSelect"
 
-import { CodeIcon } from "@radix-ui/react-icons"
+type SearchQueryPageProps = {
+  searchParams: { fruit: string }
+}
 
-export default async function Home() {
-  // const s = await getUserByUsername({ username: "karina" })
-  // console.log(s)
-  const session = await auth()
-  console.log(session)
+export default async function Home({ searchParams }: SearchQueryPageProps) {
+  // const fruit = searchParams.fruit
   return (
-    <main className="grid min-h-screen place-items-center">
-      {/* <Button className="w-20 font-bricolage">Kevin</Button> */}
-      {/* <Badge variant={"release"}>
-        <CodeIcon className="h-3 w-3" /> Release
-      </Badge> */}
-      <div className="flex flex-col gap-2 items-center justify-center">
+    <main className="min-h-screen flex flex-col">
+      <div className="self-center py-4">
+        <LoadingIcon />
         <ThemeToggleButton />
-        {/* <BasicForm /> */}
-        <SignUpWithPasswordForm />
+      </div>
+      <div className="h-full flex-1 flex flex-col gap-2 items-center justify-center">
+        <div>
+          <UserSelect />
+        </div>
+        {/* <Mintlify /> */}
       </div>
     </main>
   )
