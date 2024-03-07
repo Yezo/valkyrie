@@ -28,3 +28,9 @@ export function generateToast({
       return typeof type === "undefined" ? toast(value) : null
   }
 }
+
+export function capitalizePlaceholder(input: string): string {
+  if (input.length === 0) return input
+
+  return input.charAt(0).toUpperCase() + input.slice(1)
+}
