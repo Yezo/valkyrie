@@ -7,12 +7,7 @@ type ParagraphProps = {
 
 export const Paragraph = ({ className, children }: ParagraphProps) => {
   return (
-    <p
-      className={cn(
-        "text-muted-foreground leading-relaxed [&:not(:first-child)]:mt-4",
-        className,
-      )}
-    >
+    <p className={cn("text-muted-foreground leading-relaxed", className)}>
       {children}
     </p>
   )
