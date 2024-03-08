@@ -1,8 +1,9 @@
 "use client"
 
-import { capitalizePlaceholder, cn } from "@/lib/utils"
+import { capitalizeStr, cn } from "@/lib/utils"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { useCallback } from "react"
+import { ItemsType } from "@/types"
 import {
   Select,
   SelectContent,
@@ -14,46 +15,61 @@ import {
 
 type UserSelectProps = {
   className?: string
+  placeholder: string
+  items: ItemsType
+  param?: string
 }
 
-export const UserSelect = ({ className }: UserSelectProps) => {
+export const UserSelect = ({
+  className,
+  placeholder,
+  items,
+  param,
+}: UserSelectProps) => {
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
-  const fruit = searchParams.get("fruit")
+  const selectedPlaceholder = searchParams.get(param || "")
 
-  // Get a new searchParams string by merging the current
-  // searchParams with a provided key/value pair
+  // Merge pre-existing params with a provided key/value pair
   const createQueryString = useCallback(
-    (name: string, value: string) => {
-      const params = new URLSearchParams(searchParams.toString())
-      params.set(name, value)
-
-      return params.toString()
+    (name: string | undefined, value: string) => {
+      if (name) {
+        const params = new URLSearchParams(searchParams.toString())
+        params.set(name, value)
+        return params.toString()
+      }
+      return null
     },
     [searchParams],
   )
 
   function onChange(item: string) {
-    router.replace(
-      `${pathname + "?" + createQueryString("fruit", `${item.toLowerCase()}`)}`,
-    )
+    const paramVal = item.toLowerCase()
+    const newURL = `${pathname + "?" + createQueryString(param, paramVal)}`
+    if (param) router.replace(newURL)
+    //If param wasn't passed as props, then onChange logic goes here
+    else console.log(item)
   }
 
   return (
     <Select onValueChange={onChange}>
       <SelectTrigger className={cn("w-[180px]", className)}>
         <SelectValue
-          placeholder={fruit ? capitalizePlaceholder(fruit) : "Select a fruit"}
+          placeholder={
+            selectedPlaceholder
+              ? capitalizeStr(selectedPlaceholder)
+              : placeholder
+          }
         />
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
-          <SelectItem value="Apple">Apple</SelectItem>
-          <SelectItem value="Banana">Banana</SelectItem>
-          <SelectItem value="Blueberry">Blueberry</SelectItem>
-          <SelectItem value="Grapes">Grapes</SelectItem>
-          <SelectItem value="Pineapple">Pineapple</SelectItem>
+          {items.map(({ value, label }) => (
+            <SelectItem value={value} key={label}>
+              {capitalizeStr(label)}
+            </SelectItem>
+          ))}
         </SelectGroup>
       </SelectContent>
     </Select>

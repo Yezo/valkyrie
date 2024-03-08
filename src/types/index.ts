@@ -9,3 +9,8 @@ export type DatabasePromise =
   | "not-found"
   | "invalid-input"
   | null
+
+export type ItemsType = {
+  label: string
+  value: string
+}[]

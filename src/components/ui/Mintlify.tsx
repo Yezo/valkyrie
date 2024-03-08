@@ -11,17 +11,17 @@ type MintlifyProps = {
 export const Mintlify = ({ className }: MintlifyProps) => {
   return (
     <section className={cn("xl:w-[1025px]", className)}>
-      <div className="text-center flex flex-col items-center justify-center mb-12">
-        <p className="text-muted-foreground/80 tracking-wide uppercase text-xs mb-4 font-light">
+      <div className="mb-12 flex flex-col items-center justify-center text-center">
+        <p className="mb-4 text-xs font-light uppercase tracking-wide text-muted-foreground/80">
           a modern solution
         </p>
-        <H2 className="sm:text-4xl font-medium tracking-tight max-w-[450px] ">
+        <H2 className="max-w-[450px] font-medium tracking-tight sm:text-4xl ">
           Beautiful documentation that converts users
         </H2>
         <Paragraph>A platform you can rely on to reach your audience</Paragraph>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-1.5 ">
+      <div className="grid grid-cols-1 gap-1.5 md:grid-cols-2 ">
         <TopBlock
           roundedSide="tl"
           title="Gorgeous out of the box"
@@ -41,8 +41,8 @@ export const Mintlify = ({ className }: MintlifyProps) => {
           darkModeImageAlt="ye"
         />
 
-        <div className="hidden md:block col-span-2">
-          <div className="md:grid grid-cols-1 md:grid-cols-3 gap-1.5">
+        <div className="col-span-2 hidden md:block">
+          <div className="grid-cols-1 gap-1.5 md:grid md:grid-cols-3">
             <BottomBlock
               roundedSide="bl"
               title="Built for performance"
@@ -100,16 +100,16 @@ export const TopBlock = ({
 }: TopBlockProps) => {
   return (
     <div
-      className={`bg-gray-100/70 dark:border dark:border-white/5 rounded-xl ${roundedSide === "tl" ? "md:rounded-tl-[3rem]" : "md:rounded-tr-[3rem]"} overflow-hidden h-[305px] grid place-items-center dark:bg-[#04050B]`}
+      className={`rounded-xl bg-gray-100/70 dark:border dark:border-white/5 ${roundedSide === "tl" ? "md:rounded-tl-[3rem]" : "md:rounded-tr-[3rem]"} grid h-[305px] place-items-center overflow-hidden dark:bg-[#04050B]`}
     >
-      <div className="flex justify-center relative overflow-hidden rounded-xl">
+      <div className="relative flex justify-center overflow-hidden rounded-xl">
         <Image
           src={lightModeImageURL}
           alt={lightModeImageAlt}
           width={400}
           height={185}
           quality={100}
-          className="w-full xl:w-[400px] max-h-[185px] object-cover object-top rounded-xl dark:hidden"
+          className="max-h-[185px] w-full rounded-xl object-cover object-top dark:hidden xl:w-[400px]"
         />
         <Image
           src={darkModeImageURL}
@@ -117,13 +117,13 @@ export const TopBlock = ({
           width={400}
           height={185}
           quality={100}
-          className="w-full xl:w-[400px] max-h-[185px] object-cover object-top rounded-xl hidden dark:block"
+          className="hidden max-h-[185px] w-full rounded-xl object-cover object-top dark:block xl:w-[400px]"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[#F7F7F8] dark:to-[#04050B] overflow-hidden rounded-xl" />
+        <div className="absolute inset-0 overflow-hidden rounded-xl bg-gradient-to-b from-transparent to-[#F7F7F8] dark:to-[#04050B]" />
       </div>
-      <div className="flex items-center flex-col justify-center text-center ">
+      <div className="flex flex-col items-center justify-center text-center ">
         <H3 className="tracking-tight">{title}</H3>
-        <Paragraph className="text-xs px-8">{description}</Paragraph>
+        <Paragraph className="px-8 text-xs">{description}</Paragraph>
       </div>
     </div>
   )
@@ -150,16 +150,16 @@ export const BottomBlock = ({
 }: BottomBlockProps) => {
   return (
     <div
-      className={`bg-gray-100/70 dark:border dark:border-white/5 rounded-xl overflow-hidden grid place-items-center dark:bg-[#04050B] h-[345px] ${roundedSide === "bl" && "md:rounded-bl-[3rem]"} ${roundedSide === "br" && "md:rounded-br-[3rem]"} ${roundedSide === "middle" && ""}`}
+      className={`grid h-[345px] place-items-center overflow-hidden rounded-xl bg-gray-100/70 dark:border dark:border-white/5 dark:bg-[#04050B] ${roundedSide === "bl" && "md:rounded-bl-[3rem]"} ${roundedSide === "br" && "md:rounded-br-[3rem]"} ${roundedSide === "middle" && ""}`}
     >
-      <div className="flex justify-center relative overflow-hidden rounded-xl">
+      <div className="relative flex justify-center overflow-hidden rounded-xl">
         <Image
           src={lightModeImageURL}
           alt={lightModeImageAlt}
           width={400}
           height={185}
           quality={100}
-          className=" w-full max-h-[185px] object-cover object-top rounded-xl dark:hidden px-4"
+          className=" max-h-[185px] w-full rounded-xl object-cover object-top px-4 dark:hidden"
         />
         <Image
           src={darkModeImageURL}
@@ -167,13 +167,13 @@ export const BottomBlock = ({
           width={400}
           height={185}
           quality={100}
-          className=" w-full  max-h-[185px] object-cover object-top rounded-xl hidden dark:block"
+          className=" hidden  max-h-[185px] w-full rounded-xl object-cover object-top dark:block"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[#F7F7F8] dark:to-[#04050B] overflow-hidden rounded-xl" />
+        <div className="absolute inset-0 overflow-hidden rounded-xl bg-gradient-to-b from-transparent to-[#F7F7F8] dark:to-[#04050B]" />
       </div>
-      <div className="flex items-center flex-col justify-center text-center ">
+      <div className="flex flex-col items-center justify-center text-center ">
         <H3 className="tracking-tight">{title}</H3>
-        <Paragraph className="text-xs px-8">{description}</Paragraph>
+        <Paragraph className="px-8 text-xs">{description}</Paragraph>
       </div>
     </div>
   )

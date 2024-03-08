@@ -1,5 +1,6 @@
 import { cn } from "@/lib/utils"
 import { useFormContext } from "react-hook-form"
+import { ItemsType } from "@/types"
 import {
   FormField,
   FormItem,
@@ -22,10 +23,7 @@ type FormSelectProps = {
   className?: string
   description?: string
   label?: string
-  items: {
-    value: string
-    label: string
-  }[]
+  items: ItemsType
 }
 
 export const FormSelect = ({
@@ -45,13 +43,13 @@ export const FormSelect = ({
       render={({ field }) => (
         <FormItem>
           {label ? (
-            <FormLabel className="capitalize font-bricolage">{label}</FormLabel>
+            <FormLabel className="font-bricolage capitalize">{label}</FormLabel>
           ) : null}
           <Select onValueChange={field.onChange} defaultValue={field.value}>
             <FormControl>
               <SelectTrigger
                 className={cn(
-                  "data-[placeholder]:text-muted-foreground data-[placeholder]:font-bricolage text-sm",
+                  "text-sm data-[placeholder]:font-bricolage data-[placeholder]:text-muted-foreground",
                   className,
                 )}
               >

@@ -29,8 +29,13 @@ export function generateToast({
   }
 }
 
-export function capitalizePlaceholder(input: string): string {
-  if (input.length === 0) return input
+export function capitalizeStr(input: string | undefined): string | undefined {
+  if (!input || input.length === 0) {
+    return input // Return undefined or an empty string if input is undefined or an empty string
+  }
 
-  return input.charAt(0).toUpperCase() + input.slice(1)
+  const words = input
+    .split(" ")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+  return words.join(" ")
 }
