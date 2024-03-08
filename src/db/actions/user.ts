@@ -25,7 +25,7 @@ import {
 } from "@/db/prepared/statements"
 import { z } from "zod"
 import { signUpWithPasswordSchema } from "@/validations/auth"
-import { DatabasePromise } from "@/types"
+import { DatabasePromiseType } from "@/types"
 
 export async function getUserById(
   rawData: z.infer<typeof getUserByIdSchema>,
@@ -150,7 +150,7 @@ export async function getUserProfileById(
 
 export async function updateUserUsername(
   rawData: z.infer<typeof updateUserUsernameSchema>,
-): Promise<DatabasePromise> {
+): Promise<DatabasePromiseType> {
   noStore()
 
   try {
@@ -185,7 +185,7 @@ export async function updateUserUsername(
 
 export async function updateUserFullName(
   rawData: z.infer<typeof updateUserFullNameSchema>,
-): Promise<DatabasePromise> {
+): Promise<DatabasePromiseType> {
   noStore()
 
   try {
@@ -213,7 +213,7 @@ export async function updateUserFullName(
 
 export async function signUpWithPassword(
   rawData: z.infer<typeof signUpWithPasswordSchema>,
-): Promise<DatabasePromise> {
+): Promise<DatabasePromiseType> {
   //Validate the user's input
   const validatedData = signUpWithPasswordSchema.safeParse(rawData)
 
