@@ -14,3 +14,11 @@ export const SITE_CONFIG = {
     signout: "/signout",
   },
 }
+
+export const DEFAULT_LOGIN_PATH = "/login"
+export const DEFAULT_LOGIN_REDIRECT = "/profile"
+
+export const DEFAULT_SIGNUP_PATH = "/signup"
+export const DEFAULT_SIGNUP_REDIRECT = "/login"
+
+export const DEFAULT_SIGNOUT_REDIRECT = "/login"
