@@ -6,7 +6,7 @@ type BadgeProps = {
   children: React.ReactNode
 }
 
-const badgeVariants = cva(
+const BadgeVariants = cva(
   "flex select-none items-center gap-1 rounded-md px-2 font-bricolage text-xs font-medium leading-6 shadow-sm max-w-fit",
   {
     variants: {
@@ -29,13 +29,13 @@ const badgeVariants = cva(
   },
 )
 
-interface BadgeCVAProps extends VariantProps<typeof badgeVariants>, BadgeProps {
+interface BadgeCVAProps extends VariantProps<typeof BadgeVariants>, BadgeProps {
   className?: string
   children: React.ReactNode
 }
 
 export const Badge = ({ className, children, variant }: BadgeCVAProps) => {
   return (
-    <div className={cn(badgeVariants({ variant, className }))}>{children}</div>
+    <div className={cn(BadgeVariants({ variant, className }))}>{children}</div>
   )
 }

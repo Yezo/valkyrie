@@ -6,7 +6,7 @@ type IconProps = {
   children: React.ReactNode
 }
 
-const iconVariants = cva("p-2 rounded shadow select-none", {
+const IconVariants = cva("p-2 rounded shadow select-none", {
   variants: {
     variant: {
       default: "bg-primary text-primary-foreground",
@@ -24,13 +24,13 @@ const iconVariants = cva("p-2 rounded shadow select-none", {
   },
 })
 
-interface IconCVAProps extends VariantProps<typeof iconVariants>, IconProps {
+interface IconCVAProps extends VariantProps<typeof IconVariants>, IconProps {
   className?: string
   children: React.ReactNode
 }
 
 export const Icon = ({ className, children, variant }: IconCVAProps) => {
   return (
-    <div className={cn(iconVariants({ variant, className }))}>{children}</div>
+    <div className={cn(IconVariants({ variant, className }))}>{children}</div>
   )
 }
