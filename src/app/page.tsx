@@ -1,6 +1,7 @@
 import { BlobComponent } from "@/components/ui/Blob"
 import { LoadingIcon } from "@/components/ui/LoadingIcon"
 import { Mintlify } from "@/components/ui/Mintlify"
+import { SearchInput } from "@/components/ui/SearchInput"
 import { ThemeToggleButton } from "@/components/ui/ThemeToggleButton"
 import { UserSelect } from "@/components/ui/UserSelect"
 
@@ -21,6 +22,7 @@ export default async function Home({ searchParams }: SearchQueryPageProps) {
       </div>
       <div className="flex flex-1 flex-col items-center justify-center">
         <UserSelect placeholder="Select a song" items={test} />
+        <SearchInput param={"q"} />
         {/* <BlobComponent /> */}
       </div>
     </main>
