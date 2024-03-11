@@ -1,0 +1,15 @@
+export const MAIN_NAV_LINKS = [
+  { label: "Avatar", url: "/components/avatar" },
+  { label: "Alert", url: "/components/alert" },
+  { label: "Badge", url: "/components/badge" },
+  { label: "Blob", url: "/components/blob" },
+  { label: "Data Table", url: "/components/datatable" },
+  { label: "Forms", url: "/components/form" },
+  { label: "Loading", url: "/components/loading" },
+  { label: "Typography", url: "/components/typography" },
+  { label: "Mintlify", url: "/components/mintlify" },
+  { label: "Button", url: "/components/button" },
+  { label: "Input", url: "/components/input" },
+  { label: "Stack", url: "/components/stack" },
+  { label: "Select", url: "/components/select" },
+]
