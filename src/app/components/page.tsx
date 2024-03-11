@@ -12,7 +12,9 @@ type SearchQueryPageProps = {
   searchParams: { fruit: string }
 }
 
-export default async function Home({ searchParams }: SearchQueryPageProps) {
+export default async function ComponentsPage({
+  searchParams,
+}: SearchQueryPageProps) {
   const test = [
     { label: "Peach", value: "Peach" },
     { label: "wish you would", value: "Wish you would" },
@@ -25,9 +27,7 @@ export default async function Home({ searchParams }: SearchQueryPageProps) {
     <main className="grid grid-cols-1 sm:grid-cols-[280px,8fr]">
       <aside className="border-r">
         <nav className="sticky top-0 min-h-screen p-8">
-          <div className="font-bricolage text-lg font-semibold tracking-tight sm:text-3xl">
-            Valkyrie.
-          </div>
+          <H1 className="text-lg sm:text-3xl">Valkyrie.</H1>
 
           <ul className="mt-12 space-y-2 text-sm tracking-tight text-muted-foreground">
             {sortedLinks.map(({ label, url }, index) => (
@@ -42,7 +42,7 @@ export default async function Home({ searchParams }: SearchQueryPageProps) {
         </nav>
       </aside>
       <div className="px-4">
-        <div className="min-h-screen">main content</div>
+        <div className="min-h-screen">component page</div>
         <div className="min-h-screen">main content</div>
       </div>
     </main>

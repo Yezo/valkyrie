@@ -1,6 +1,6 @@
 "use client"
 
-import { Payment } from "@/app/datatable/page"
+import { Payment } from "@/app/components/datatable/page"
 import { DataTableCell } from "@/components/ui/DataTableCell"
 import { DataTableHeader } from "@/components/ui/DataTableHeader"
 import { ColumnDef } from "@tanstack/react-table"
