@@ -1,3 +1,4 @@
+import { SignUpWithPasswordForm } from "@/components/forms/SignUpForm"
 import { BlobComponent } from "@/components/ui/Blob"
 import { H1 } from "@/components/ui/H1"
 import { LoadingIcon } from "@/components/ui/LoadingIcon"
@@ -42,7 +43,9 @@ export default async function Home({ searchParams }: SearchQueryPageProps) {
         </nav>
       </aside>
       <div className="px-4">
-        <div className="min-h-screen">main content</div>
+        <div className="min-h-screen">
+          <SignUpWithPasswordForm />
+        </div>
         <div className="min-h-screen">main content</div>
       </div>
     </main>

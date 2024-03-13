@@ -25,7 +25,8 @@ import {
 } from "@/db/prepared/statements"
 import { z } from "zod"
 import { signUpWithPasswordSchema } from "@/validations/auth"
-import { DatabasePromiseType } from "@/types"
+import { ApiError, getErrorMessage } from "@/lib/utils"
+import { ActionPromiseType, DatabasePromiseType } from "@/types"
 
 export async function getUserById(
   rawData: z.infer<typeof getUserByIdSchema>,
@@ -213,23 +214,23 @@ export async function updateUserFullName(
 
 export async function signUpWithPassword(
   rawData: z.infer<typeof signUpWithPasswordSchema>,
-): Promise<DatabasePromiseType> {
+): Promise<ActionPromiseType> {
   //Validate the user's input
   const validatedData = signUpWithPasswordSchema.safeParse(rawData)
 
   //If invalidated, return an error on the client side
-  if (!validatedData.success) return "invalid-input"
+  if (!validatedData.success) return { error: ApiError.invalidInput }
 
   try {
     //Check if the input's user exists in the database
     const username = await getUserByUsername({
       username: validatedData.data.username,
     })
-    if (username) return "user-duplicate"
+    if (username) return { error: ApiError.duplicateUser }
 
     //Check if the input's email exists in the database
     const user = await getUserByEmail({ email: validatedData.data.email })
-    if (user) return "email-duplicate"
+    if (user) return { error: ApiError.duplicateEmail }
 
     //Encrypt the password
     const password = await bcryptjs.hash(validatedData.data.password, 10)
@@ -243,11 +244,13 @@ export async function signUpWithPassword(
     })
 
     //If inserting a user failed, return an error
-    if (!newUserResponse) return "error"
+    if (!newUserResponse) return { error: ApiError.error }
+
     revalidatePath("/")
-    return newUserResponse ? "success" : "error"
+    return (
+      newUserResponse && { success: "Your account was successfully created" }
+    )
   } catch (error) {
-    console.error(error)
-    throw new Error("Error signing up with password")
+    return { error: getErrorMessage(error) }
   }
 }

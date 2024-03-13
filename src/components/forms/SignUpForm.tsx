@@ -5,7 +5,7 @@ import { useState } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { useRouter } from "next/navigation"
-import { generateToast } from "@/lib/utils"
+import { ApiError, generateToast } from "@/lib/utils"
 import { Form } from "@/components/shadcn/form"
 import { signUpWithPasswordSchema } from "@/validations/auth"
 import { signUpWithPassword } from "@/db/actions/user"
@@ -32,62 +32,31 @@ export function SignUpWithPasswordForm({}: SignUpWithPasswordFormProps) {
     setPending(true)
 
     try {
-      const message = await signUpWithPassword({
+      const response = await signUpWithPassword({
         username: formData.username,
         email: formData.email,
         password: formData.password,
       })
 
-      switch (message) {
-        case "success":
-          generateToast({
-            type: "success",
-            value: "Success!",
-            description: "Your account was successfully created.",
-          })
-          //   router.push("/login")
-          break
-
-        case "user-duplicate":
-          generateToast({
-            type: "warning",
-            value: "This username already exists.",
-            description: "Please try a different username.",
-          })
-          setPending(false)
-          break
-
-        case "email-duplicate":
-          generateToast({
-            type: "warning",
-            value: "User with this email address already exists.",
-            description: "If this is you, please sign in instead.",
-          })
-          setPending(false)
-          break
-
-        case "invalid-input":
-          generateToast({
-            type: "warning",
-            value: "Invalid inputs.",
-            description: "Please try again with different inputs.",
-          })
-          setPending(false)
-          break
-
-        default:
-          generateToast({
-            type: "error",
-            value: "Something went wrong!",
-            description: "Please try again.",
-          })
-          setPending(false)
+      if ("error" in response) {
+        generateToast({
+          type: "warning",
+          value: "An error occurred.",
+          description: response.error,
+        })
+        setPending(false)
+      } else {
+        generateToast({
+          type: "success",
+          value: "Success!",
+          description: response.success,
+        })
       }
     } catch (error) {
       generateToast({
-        type: "error",
-        value: "Something went wrong!",
-        description: "Please try again.",
+        type: "warning",
+        value: "Something went wrong.",
+        description: ApiError.error,
       })
       setPending(false)
     } finally {

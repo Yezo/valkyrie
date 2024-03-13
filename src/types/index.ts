@@ -10,6 +10,8 @@ export type DatabasePromiseType =
   | "invalid-input"
   | null
 
+export type ActionPromiseType = { error: string } | { success: string }
+
 export type ItemsType = {
   label: string
   value: string
